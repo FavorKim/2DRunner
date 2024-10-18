@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlatformManager : ObjectPoolManager
+public class PlatformManager : Singleton<PlatformManager>
 {
+    [SerializeField] private Platform platformPrefab;
+    [SerializeField] private int poolCount;
+    private ObjectPool<Platform> platformPool;
+
 
     [SerializeField, Range(1f, 5.0f)] private float spawnSpeed;
     public float SpawnSpeed 
@@ -36,6 +40,7 @@ public class PlatformManager : ObjectPoolManager
     protected override void Start()
     {
         base.Start();
+        platformPool = new ObjectPool<Platform>(platformPrefab, poolCount);
         OnGameSpeedChange_SetSpawnCooltime();
         StartCoroutine(CorSpawnPlatform());
         EventManager.Instance.AddListener("OnGameSpeedChange", OnGameSpeedChange_SetSpawnCooltime, out bool already);
@@ -52,9 +57,11 @@ public class PlatformManager : ObjectPoolManager
         prevSpawnPos = rand;
         Vector2 spawnPos = spawnPosList[rand];
 
-        GameObject platform = GetObject();
+        Platform platform = platformPool.GetObject();
 
         platform.transform.position = spawnPos;
+
+        platform.InvokeOnSpawnPlatform();
     }
 
     private IEnumerator CorSpawnPlatform()
@@ -79,6 +86,11 @@ public class PlatformManager : ObjectPoolManager
             }
 
         }
+    }
+
+    public void ReturnPlatform(Platform platform)
+    {
+        platformPool.EnqueueObject(platform);
     }
 
     private void OnGameSpeedChange_SetSpawnCooltime()

@@ -80,6 +80,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platformSpeedVal: 3
+  smallObsMinPos: {fileID: 4898162481399586595}
+  smallObsMaxPos: {fileID: 3352792879878639366}
+  bigObsPos: {fileID: 5728492538668295259}
 --- !u!1 &3744224513346449610
 GameObject:
   m_ObjectHideFlags: 0

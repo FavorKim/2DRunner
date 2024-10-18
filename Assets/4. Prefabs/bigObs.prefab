@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6842571668747694833}
   - component: {fileID: 2699325827214681448}
+  - component: {fileID: -6946477289901920958}
   m_Layer: 0
   m_Name: bigObs
   m_TagString: Untagged
@@ -121,6 +122,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-6946477289901920958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8565513085128965510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b7db5ddaa99ec842ad30de53c5c021e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4482478591971122461
 PrefabInstance:
   m_ObjectHideFlags: 0
