@@ -9,7 +9,7 @@ public class BGMover : MonoBehaviour
     [SerializeField] private float moveSpeed;
 
     private Vector2 pos = new Vector2(24, 0);
-
+    
     private void Update()
     {
         MoveBackGroundRelay();
@@ -23,8 +23,8 @@ public class BGMover : MonoBehaviour
 
     private void MoveBackGrounds()
     {
-        BackGroundLeft.transform.Translate(Vector2.left * Time.deltaTime * moveSpeed);
-        BackGroundRight.transform.Translate(Vector2.left * Time.deltaTime * moveSpeed);
+        BackGroundLeft.transform.Translate(Vector2.left * Time.deltaTime * GameManager.Instance.GameSpeed * moveSpeed * 0.1f);
+        BackGroundRight.transform.Translate(Vector2.left * Time.deltaTime * GameManager.Instance.GameSpeed * moveSpeed * 0.1f);
     }
 
     private GameObject IsLeftEnd()
