@@ -13,9 +13,9 @@ public class ObstacleManager : Singleton<ObstacleManager>
 
     protected override void Start()
     {
+        smallObsPool = new ObjectPool<Obstacle>(smallObsPrefab, poolCount, transform);
+        bigObsPool = new ObjectPool<Obstacle>(bigObsPrefab, poolCount, transform);
         base.Start();
-        smallObsPool = new ObjectPool<Obstacle>(smallObsPrefab, poolCount);
-        bigObsPool = new ObjectPool<Obstacle>(bigObsPrefab, poolCount);
     }
 
     public Obstacle GetSmallObs()

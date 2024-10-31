@@ -40,10 +40,10 @@ public class PlatformManager : Singleton<PlatformManager>
     protected override void Start()
     {
         base.Start();
-        platformPool = new ObjectPool<Platform>(platformPrefab, poolCount);
+        platformPool = new ObjectPool<Platform>(platformPrefab, poolCount, transform);
         OnGameSpeedChange_SetSpawnCooltime();
-        StartCoroutine(CorSpawnPlatform());
         EventManager.Instance.AddListener("OnGameSpeedChange", OnGameSpeedChange_SetSpawnCooltime, out bool already);
+        StartCoroutine(CorSpawnPlatform());
     }
 
 
@@ -69,8 +69,6 @@ public class PlatformManager : Singleton<PlatformManager>
         float t = 0;
         while (true)
         {
-            t += Time.deltaTime;
-            yield return null;
             if (!isStop)
             {
                 if (t > spawnCool)
@@ -84,7 +82,8 @@ public class PlatformManager : Singleton<PlatformManager>
                 t = 0;
                 yield return null;
             }
-
+            t += Time.deltaTime;
+            yield return null;
         }
     }
 

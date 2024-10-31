@@ -9,7 +9,7 @@ public class Platform : MonoBehaviour
     [SerializeField] private Transform smallObsMaxPos;
     [SerializeField] private Transform bigObsPos;
 
-    UnityAction OnDisablePlatform;
+    public UnityAction OnDisablePlatform;
     UnityAction OnSpawnPlatform;
 
     private void Start()
@@ -17,8 +17,17 @@ public class Platform : MonoBehaviour
         OnGameSpeedChange_SetPlatformMoveSpeed();
         EventManager.Instance.AddListener("OnGameSpeedChange", OnGameSpeedChange_SetPlatformMoveSpeed, out bool already);
 
+        
+    }
+    private void OnEnable()
+    {
         OnDisablePlatform += OnDisablePlatform_EnqueueObject;
         OnSpawnPlatform += OnSpawnPlatform_SetObstacle;
+    }
+    private void OnDisable()
+    {
+        OnSpawnPlatform -= OnSpawnPlatform_SetObstacle;
+        OnDisablePlatform -= OnDisablePlatform_EnqueueObject;
     }
 
     void Update()
@@ -26,6 +35,8 @@ public class Platform : MonoBehaviour
         transform.Translate(Vector2.left * Time.deltaTime * platformMoveSpeed);
         if(transform.position.x < -15.0f)
         {
+            if (OnDisablePlatform == null)
+                OnDisablePlatform += OnDisablePlatform_EnqueueObject;
             OnDisablePlatform.Invoke();
             OnDisablePlatform = null;
         }
@@ -36,26 +47,26 @@ public class Platform : MonoBehaviour
         int rand = Random.Range(0, 3);
         if(rand == 0)
         {
-            Obstacle bigObs = ObstacleManager.Instance.GetBigObs();
-            bigObs.transform.SetParent(transform);
-            bigObs.transform.localPosition = bigObsPos.position;
 
+            Obstacle bigObs = ObstacleManager.Instance.GetBigObs();
+            bigObs.transform.SetParent(bigObsPos);
+            bigObs.transform.localPosition = Vector3.zero;
             OnDisablePlatform += bigObs.OnPlatformDisable_EnqueueObstacle;
         }
         else
         {
             Obstacle smallObs = ObstacleManager.Instance.GetSmallObs();
-            float xPos = Random.Range(smallObsMinPos.position.x, smallObsMaxPos.position.x);
-            smallObs.transform.SetParent(transform);
-            smallObs.transform.localPosition = new Vector2(xPos, smallObsMinPos.position.y);
-
+            float xPos = Random.Range(smallObsMinPos.localPosition.x, smallObsMaxPos.localPosition.x);
+            smallObs.transform.SetParent(smallObsMaxPos.parent);
+            smallObs.transform.localPosition = new Vector2(xPos, 0);
             OnDisablePlatform += smallObs.OnPlatformDisable_EnqueueObstacle;
         }
     }
 
     public void InvokeOnSpawnPlatform()
     {
-        OnSpawnPlatform.Invoke();
+        
+        OnSpawnPlatform?.Invoke();
     }
 
 

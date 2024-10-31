@@ -12,9 +12,9 @@ public class Obstacle : MonoBehaviour
 
     public void OnPlatformDisable_EnqueueObstacle()
     {
-        if (gameObject.name == "bigObs")
+        if (gameObject.name == "bigObs(Clone)")
             ObstacleManager.Instance.ReturnBigObs(this);
-        else if (gameObject.name == "smallObs")
+        else if (gameObject.name == "smallObs(Clone)")
             ObstacleManager.Instance.ReturnSmallObs(this);
     }
 

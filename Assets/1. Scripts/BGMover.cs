@@ -8,6 +8,7 @@ public class BGMover : MonoBehaviour
     [SerializeField] private GameObject BackGroundRight;
     [SerializeField] private float moveSpeed;
 
+
     private Vector2 pos = new Vector2(24, 0);
     
     private void Update()
