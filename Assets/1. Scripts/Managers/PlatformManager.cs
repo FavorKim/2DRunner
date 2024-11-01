@@ -26,13 +26,13 @@ public class PlatformManager : Singleton<PlatformManager>
 
     public bool isStop = false;
 
-    private List<Vector2> spawnPosList = new List<Vector2>()
+    private List<float> spawnPosList = new List<float>()
     {
-        new Vector2(24, -4),
-        new Vector2(24, -2.5f),
-        new Vector2(24, -1.0f),
-        new Vector2(24, 0.5f),
-        new Vector2(24, 2.0f),
+        -4,
+        -2.5f,
+        -1.0f,
+        0.5f,
+        2.0f,
     };
 
     private int prevSpawnPos = 0;
@@ -55,8 +55,8 @@ public class PlatformManager : Singleton<PlatformManager>
 
         int rand = Random.Range(0, maxRange);
         prevSpawnPos = rand;
-        Vector2 spawnPos = spawnPosList[rand];
-
+        float spawnYPos = spawnPosList[rand];
+        Vector3 spawnPos = new Vector3(GameManager.Instance.GetRightEdge(), spawnYPos);
         Platform platform = platformPool.GetObject();
 
         platform.transform.position = spawnPos;

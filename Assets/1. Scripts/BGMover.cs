@@ -12,7 +12,7 @@ public class BGMover : MonoBehaviour
     {
         
     }
-    private float GetLength()
+    public float GetLength()
     {
         Bounds bound = BackGroundLeft.bounds;
         float leftMax = bound.min.x;

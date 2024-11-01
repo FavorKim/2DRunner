@@ -33,7 +33,7 @@ public class Platform : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector2.left * Time.deltaTime * platformMoveSpeed);
-        if(transform.position.x < -15.0f)
+        if(transform.position.x < GameManager.Instance.GetLeftEdge()*1.5f)
         {
             if (OnDisablePlatform == null)
                 OnDisablePlatform += OnDisablePlatform_EnqueueObject;
