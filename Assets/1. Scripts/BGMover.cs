@@ -4,13 +4,24 @@ using UnityEngine;
 
 public class BGMover : MonoBehaviour
 {
-    [SerializeField] private GameObject BackGroundLeft;
-    [SerializeField] private GameObject BackGroundRight;
+    [SerializeField] private SpriteRenderer BackGroundLeft;
+    [SerializeField] private SpriteRenderer BackGroundRight;
     [SerializeField] private float moveSpeed;
 
+    private void Start()
+    {
+        
+    }
+    private float GetLength()
+    {
+        Bounds bound = BackGroundLeft.bounds;
+        float leftMax = bound.min.x;
+        float rightMax = bound.max.x;
+        float length = rightMax - leftMax;
 
-    private Vector2 pos = new Vector2(24, 0);
-    
+        return length;
+    }
+
     private void Update()
     {
         MoveBackGroundRelay();
@@ -31,13 +42,13 @@ public class BGMover : MonoBehaviour
     private GameObject IsLeftEnd()
     {
 
-        if (BackGroundLeft.transform.localPosition.x <= -24)
+        if (BackGroundLeft.transform.localPosition.x <= GetLength() * - 1)
         {
-            return BackGroundLeft;
+            return BackGroundLeft.gameObject;
         }
-        else if(BackGroundRight.transform.localPosition.x <= -24)
+        else if(BackGroundRight.transform.localPosition.x <= GetLength() * - 1)
         {
-            return BackGroundRight;
+            return BackGroundRight.gameObject;
         }
         return null;
     }
@@ -46,7 +57,9 @@ public class BGMover : MonoBehaviour
     {
         if (isLeftEnd != null)
         {
-            isLeftEnd.transform.localPosition = pos;
+            Vector3 newPos = isLeftEnd.transform.localPosition;
+            newPos.x += GetLength() * 2;
+            isLeftEnd.transform.localPosition = newPos;
         }
     }
 }
